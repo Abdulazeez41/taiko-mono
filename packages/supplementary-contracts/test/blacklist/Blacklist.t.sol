@@ -65,4 +65,18 @@ contract TestBlacklist is Test {
         assertTrue(!isBlacklisted);
         vm.stopBroadcast();
     }
+
+    function test_updateBlacklist() public {
+        vm.startBroadcast(updater);
+        address[] memory addressesToAdd = new address[](1);
+        addressesToAdd[0] = Bob;
+        address[] memory addressesToRemove = new address[](1);
+        addressesToRemove[0] = Alice;
+        target.updateBlacklist(addressesToAdd, addressesToRemove);
+        bool isBobBlacklisted = target.isBlacklisted(Bob);
+        bool isAliceBlacklisted = target.isBlacklisted(Alice);
+        assertTrue(isBobBlacklisted);
+        assertTrue(!isAliceBlacklisted);
+        vm.stopBroadcast();
+    }
 }
