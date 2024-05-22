@@ -79,4 +79,13 @@ contract TestBlacklist is Test {
         assertTrue(!isAliceBlacklisted);
         vm.stopBroadcast();
     }
+
+    function test_revert_addAddressAlreadyBlacklisted() public {
+        vm.startBroadcast(updater);
+        address[] memory blacklist = new address[](1);
+        blacklist[0] = Alice;
+        vm.expectRevert("Address already in blacklist");
+        target.addToBlacklist(blacklist);
+        vm.stopBroadcast();
+    }
 }
