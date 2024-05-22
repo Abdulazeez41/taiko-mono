@@ -97,4 +97,14 @@ contract TestBlacklist is Test {
         target.removeFromBlacklist(blacklist);
         vm.stopBroadcast();
     }
+
+    function test_blacklistLengthAndContent() public {
+        address[] memory expectedBlacklist = new address[](1);
+        expectedBlacklist[0] = Alice;
+        address[] memory actualBlacklist = target.blacklist();
+        uint256 actualLength = target.blacklistLength();
+        
+        assertEq(actualLength, expectedBlacklist.length);
+        assertEq(actualBlacklist[0], expectedBlacklist[0]);
+    }
 }
