@@ -55,4 +55,14 @@ contract TestBlacklist is Test {
         vm.expectRevert("Must be updater");
         target.removeFromBlacklist(blacklist);
     }
+
+    function test_removeFromBlacklist() public {
+        vm.startBroadcast(updater);
+        address[] memory blacklist = new address[](1);
+        blacklist[0] = Alice;
+        target.removeFromBlacklist(blacklist);
+        bool isBlacklisted = target.isBlacklisted(Alice);
+        assertTrue(!isBlacklisted);
+        vm.stopBroadcast();
+    }
 }
