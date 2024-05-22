@@ -88,4 +88,13 @@ contract TestBlacklist is Test {
         target.addToBlacklist(blacklist);
         vm.stopBroadcast();
     }
+
+    function test_revert_removeAddressNotInBlacklist() public {
+        vm.startBroadcast(updater);
+        address[] memory blacklist = new address[](1);
+        blacklist[0] = Bob;
+        vm.expectRevert("Address not in blacklist");
+        target.removeFromBlacklist(blacklist);
+        vm.stopBroadcast();
+    }
 }
